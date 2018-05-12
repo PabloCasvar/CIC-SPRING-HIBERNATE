@@ -1,14 +1,35 @@
 package mx.ipn.cic.biblioteca.AdminControl.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="libro")
 public class BookModel {
 
 	// Propiedades
-
-	private int id;
+	@Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="identificador")
+	private Integer id;
+	
+	@Column(name="titulo")
 	private String title;
+	
+	@Column(name="autor")
 	private String author;
+	
+	@Column(name="editorial")
 	private String editorial;
+	
+	@Column(name="paginas")
 	private int pages;
+	
+	@Column(name="edicion")
 	private String edition;
 
 	// Constructores
@@ -39,11 +60,11 @@ public class BookModel {
 
 	// Métodos de acceso
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

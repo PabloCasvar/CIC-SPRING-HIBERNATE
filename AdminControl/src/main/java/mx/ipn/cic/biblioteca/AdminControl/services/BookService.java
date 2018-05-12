@@ -1,78 +1,57 @@
 package mx.ipn.cic.biblioteca.AdminControl.services;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mx.ipn.cic.biblioteca.AdminControl.model.BookModel;
+import mx.ipn.cic.biblioteca.AdminControl.repositories.IBookRepository;
 
 @Service
 public class BookService {
 
-	private List<BookModel> books;
-	private int count;
-
-	public BookService() {
-		this.books = new ArrayList<>();
-		this.books.add(new BookModel(1, "La metamorfósis", "Franz Kafka", "Porrúa", 100, "Primera"));
-		this.books.add(new BookModel(2, "El Principito", "Antoine de Saint-Exupéry", "Fondo de cultura económica", 150,
-				"Segunda"));
-		this.books.add(new BookModel(3, "Física", "Resnik", "Infiernito", 100, "Tercera"));
-
-		this.count = this.books.size();
-	}
+	@Autowired
+	private IBookRepository repository;
 
 	public BookModel register(BookModel newBook) {
 
-		newBook.setId(++count);
-		this.books.add(newBook);
-
-		return newBook;
+		return this.repository.save(newBook);
 
 	}
 
-	public BookModel findById(int id) {
+	public BookModel findById(Integer id) {
 
-		BookModel found = null;
-		for (BookModel book : this.books) {
-			if (book.getId() == id) {
-				found = book;
-				break;
-			}
+		Optional<BookModel> found = this.repository.findById(id);
+		
+		try {
+			return found.get();
+		} catch (NoSuchElementException e) {
+			System.out.println("No se encontró el elemento");
 		}
 
-		return found;
+		return null;
+		
 	}
 
 	public List<BookModel> findAll() {
-		return this.books;
+		return this.repository.findAll();
 	}
 
-	public boolean delete(int idToDelete) {
+	public boolean delete(Integer idToDelete) {
 
-		BookModel found = this.findById(idToDelete);
-		if (found != null) {
-			return this.books.remove(found);
-		} else {
-			return false;
-		}
+		this.repository.deleteById(idToDelete);
+		
+		return true;
 
 	}
 
 	public BookModel edit(BookModel bookModel) {
 
-		BookModel book = 
-				this.findById(bookModel.getId());
-		if (book != null) {
-			book.setTitle(bookModel.getTitle());
-			book.setAuthor(bookModel.getAuthor());
-			book.setEdition(bookModel.getEdition());
-			book.setEditorial(bookModel.getEditorial());
-			book.setPages(bookModel.getPages());
-		}
-
-		return book;
+		return this.repository.save(bookModel);
+		
 	}
 
 }

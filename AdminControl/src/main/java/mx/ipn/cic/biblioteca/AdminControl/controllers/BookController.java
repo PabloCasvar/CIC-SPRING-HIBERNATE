@@ -60,10 +60,14 @@ public class BookController {
 	public String register(@ModelAttribute(name = "bookModel") 
 										BookModel bookModel) {
 
-		if (bookModel.getId() == 0) {
+		if (bookModel.getId() == null || bookModel.getId() == 0) {
+			
 			this.bookService.register(bookModel);
+			
 		} else {
+			
 			this.bookService.edit(bookModel);
+			
 		}
 
 		System.out.println(bookModel);
