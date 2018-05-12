@@ -21,6 +21,11 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 
+	@GetMapping(path="")
+	public String redirectToAll() {
+		return "redirect:/book/all";
+	}
+	
 	@GetMapping(path = "/all")
 	public ModelAndView allBooks() {
 
@@ -52,7 +57,8 @@ public class BookController {
 	// }
 
 	@PostMapping(path = "/register")
-	public String register(@ModelAttribute(name = "bookModel") BookModel bookModel) {
+	public String register(@ModelAttribute(name = "bookModel") 
+										BookModel bookModel) {
 
 		if (bookModel.getId() == 0) {
 			this.bookService.register(bookModel);
@@ -67,9 +73,11 @@ public class BookController {
 	}
 
 	@GetMapping(path = "/edit/{id}")
-	public ModelAndView edit(@PathVariable("id") Integer id) {
+	public ModelAndView edit(@PathVariable("id") 
+									Integer identificador) {
 
-		BookModel bookFound = this.bookService.findById(id);
+		BookModel bookFound = 
+				this.bookService.findById(identificador);
 		ModelAndView mav = 
 				new ModelAndView("books/newBookForm", 
 						"bookModel", 
@@ -79,7 +87,8 @@ public class BookController {
 	}
 
 	@GetMapping(path = "/delete/{id}")
-	public String delete(@PathVariable("id") Integer idToDelete) {
+	public String delete(@PathVariable("id") 
+								Integer idToDelete) {
 
 		this.bookService.delete(idToDelete);
 		
