@@ -111,6 +111,14 @@ public class UserModel {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+	public List<LoanModel> getLoans() {
+		return loans;
+	}
+	
+	public void setLoans(List<LoanModel> loans) {
+		this.loans = loans;
+	}
 
 	// Método toString optimizado
 	@Override
