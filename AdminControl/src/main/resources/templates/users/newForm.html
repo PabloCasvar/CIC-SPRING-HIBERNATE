@@ -9,13 +9,16 @@
 
 	<form action="#" 
 		th:action="@{/user/register}"
+		th:object="${userModel}"
 		method="post">
 
-		<input name="name" placeholder="Nombre:">
-		<input name="lastnameP" placeholder="Apellido Paterno:">
-		<input name="lastnameM" placeholder="Apellido Materno:">
-		<input type="number" name="age" placeholder="Edad">
-		<textarea name="address" placeholder="Dirección:"></textarea>
+		<input th:field="*{id}" hidden="true">
+
+		<input name="name" placeholder="Nombre:" th:field="*{name}">
+		<input name="lastnameP" placeholder="Apellido Paterno:" th:field="*{lastnameP}">
+		<input name="lastnameM" placeholder="Apellido Materno:" th:field="*{lastnameM}">
+		<input type="number" name="age" placeholder="Edad" th:field="*{age}">
+		<textarea name="address" placeholder="Dirección:" th:field="*{address}"></textarea>
 		
 		<input type="submit" value="Registrar!">
 

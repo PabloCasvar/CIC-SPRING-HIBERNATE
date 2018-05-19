@@ -41,7 +41,10 @@ public class BookController {
 	@GetMapping(path = "/newForm")
 	public ModelAndView newBookForm() {
 
-		ModelAndView mav = new ModelAndView("books/newBookForm", "bookModel", new BookModel());
+		ModelAndView mav = new ModelAndView(
+				"books/newBookForm",
+				"bookModel",
+				new BookModel());
 
 		return mav;
 

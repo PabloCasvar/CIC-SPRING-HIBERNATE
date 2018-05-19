@@ -27,6 +27,14 @@
 				<td th:text="${user.lastnameM}"></td>
 				<td th:text="${user.age}"></td>
 				<td th:text="${user.address}"></td>
+				<td><a href="#" 
+						th:href="@{'/user/edit/'+${user.id}}">
+						<button>Editar</button>
+				</a></td>
+				<td><a href="#" 
+						th:href="@{'/user/delete/'+${user.id}}">
+						<button>Eliminar</button>
+				</a></td>
 			</tr>
 
 		</tbody>

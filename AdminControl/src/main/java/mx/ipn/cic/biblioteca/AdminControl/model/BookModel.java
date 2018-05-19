@@ -39,7 +39,7 @@ public class BookModel {
 
 	}
 
-	public BookModel(int id, String title, String author, String editorial, int pages, String edition) {
+	public BookModel(Integer id, String title, String author, String editorial, int pages, String edition) {
 		super();
 		this.id = id;
 		this.title = title;

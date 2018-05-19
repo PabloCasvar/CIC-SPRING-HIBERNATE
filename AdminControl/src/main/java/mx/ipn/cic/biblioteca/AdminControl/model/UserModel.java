@@ -1,13 +1,35 @@
 package mx.ipn.cic.biblioteca.AdminControl.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "usuario")
 public class UserModel {
 
 	// Propiedades privadas
-	private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "identificador")
+	private Integer id;
+
+	@Column(name="nombre")
 	private String name;
+	
+	@Column(name="apellido_paterno")
 	private String lastnameP;
+	
+	@Column(name="apellido_materno")
 	private String lastnameM;
+	
+	@Column(name="edad")
 	private int age;
+	
+	@Column(name="direccion")
 	private String address;
 
 	// Constructores
@@ -16,7 +38,7 @@ public class UserModel {
 
 	}
 
-	public UserModel(int id, String name, String lastnameP, String lastnameM, int age, String address) {
+	public UserModel(Integer id, String name, String lastnameP, String lastnameM, int age, String address) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -36,11 +58,11 @@ public class UserModel {
 	}
 
 	// Métodos de acceso
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
