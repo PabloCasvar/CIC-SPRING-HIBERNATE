@@ -28,11 +28,11 @@ public class LoanModel {
 	private Date endDate;
 
 	@ManyToOne
-	@JoinColumn(name = "book_id", referencedColumnName = "id")
+	@JoinColumn(name = "libro_id", referencedColumnName = "identificador")
 	private BookModel book;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	@JoinColumn(name = "usuario_id", referencedColumnName = "identificador")
 	private UserModel user;
 
 	// Constructores

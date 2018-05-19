@@ -20,24 +20,24 @@ public class UserModel {
 	@Column(name = "identificador")
 	private Integer id;
 
-	@Column(name="nombre")
+	@Column(name = "nombre")
 	private String name;
-	
-	@Column(name="apellido_paterno")
+
+	@Column(name = "apellido_paterno")
 	private String lastnameP;
-	
-	@Column(name="apellido_materno")
+
+	@Column(name = "apellido_materno")
 	private String lastnameM;
-	
-	@Column(name="edad")
+
+	@Column(name = "edad")
 	private int age;
-	
-	@Column(name="direccion")
+
+	@Column(name = "direccion")
 	private String address;
 
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy = "user")
 	private List<LoanModel> loans;
-	
+
 	// Constructores
 	public UserModel() {
 		super();
@@ -111,13 +111,20 @@ public class UserModel {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+
 	public List<LoanModel> getLoans() {
 		return loans;
 	}
-	
+
 	public void setLoans(List<LoanModel> loans) {
 		this.loans = loans;
+	}
+
+	public String fullName() {
+		return String.format("%s %s %s", 
+				name,
+				lastnameP, 
+				lastnameM);
 	}
 
 	// Método toString optimizado
