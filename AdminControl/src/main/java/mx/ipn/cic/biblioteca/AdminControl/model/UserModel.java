@@ -1,10 +1,13 @@
 package mx.ipn.cic.biblioteca.AdminControl.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -13,7 +16,7 @@ public class UserModel {
 
 	// Propiedades privadas
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "identificador")
 	private Integer id;
 
@@ -32,6 +35,9 @@ public class UserModel {
 	@Column(name="direccion")
 	private String address;
 
+	@OneToMany(mappedBy="user")
+	private List<LoanModel> loans;
+	
 	// Constructores
 	public UserModel() {
 		super();
