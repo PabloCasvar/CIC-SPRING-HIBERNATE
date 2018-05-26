@@ -1,30 +1,29 @@
 package mx.ipn.cic.biblioteca.AdminControl.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import mx.ipn.cic.biblioteca.AdminControl.model.UserModel;
+import mx.ipn.cic.biblioteca.AdminControl.services.UserService;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-	private List<UserModel> users;
+	@Autowired
+	private UserService userService;
 
-	public UserController() {
-
-		this.users = new ArrayList<>();
-		this.users.add(new UserModel(1, "Manuel", "Pérez", "Santos", 29, "mi casa"));
-		this.users.add(new UserModel(2, "Ernesto", "González", "Rodriguez", 26, "Su casa"));
-		this.users.add(new UserModel(3, "Emanuel", "Sánchez", "Cruz", 28, "otra casa"));
-
+	@GetMapping(path = "")
+	public String redirectToAll() {
+		return "redirect:/user/all";
 	}
 
 	// @RequestMapping(path = "/newUserForm",
@@ -32,7 +31,8 @@ public class UserController {
 	@GetMapping(path = "/newForm")
 	public ModelAndView newUserForm() {
 
-		ModelAndView mav = new ModelAndView("users/newForm");
+		ModelAndView mav = new ModelAndView("users/newForm", "userModel", new UserModel());
+
 		return mav;
 
 	}
@@ -40,26 +40,47 @@ public class UserController {
 	@GetMapping(path = "/all")
 	public ModelAndView allUsers() {
 
+		List<UserModel> findAll = this.userService.findAll();
+
 		ModelAndView mav = new ModelAndView("users/all");
-		mav.addObject("users", this.users);
+		mav.addObject("users", findAll);
 
 		return mav;
 
 	}
 
 	@PostMapping(path = "/register")
-	public String register(
-			@RequestParam(name = "name") String name,
-			@RequestParam(name = "lastnameP") String lastnameP,
-			@RequestParam(name = "lastnameM") String lastnameM,
-			@RequestParam(name = "age") int age,
-			@RequestParam(name="address") String address
-			) {
+	public String register(@RequestParam(name = "name") String name, @RequestParam(name = "lastnameP") String lastnameP,
+			@RequestParam(name = "lastnameM") String lastnameM, @RequestParam(name = "age") int age,
+			@RequestParam(name = "address") String address, @RequestParam(name = "id", required = false) Integer id) {
 
 		// Proceso de registro
-		
-		UserModel user = new UserModel(name, lastnameP, lastnameM, age, address);
-		this.users.add(user);
+
+		UserModel user = new UserModel(id, name, lastnameP, lastnameM, age, address);
+
+		if (id == null) {
+			this.userService.register(user);
+		} else {
+			this.userService.edit(user);
+		}
+
+		return "redirect:/user/all";
+
+	}
+
+	@GetMapping(path = "/edit/{id}")
+	public ModelAndView edit(@PathVariable("id") Integer identificador) {
+
+		UserModel userFound = this.userService.findById(identificador);
+		ModelAndView mav = new ModelAndView("users/newForm", "userModel", userFound);
+		return mav;
+
+	}
+
+	@GetMapping(path = "/delete/{id}")
+	public String delete(@PathVariable("id") Integer idToDelete) {
+
+		this.userService.delete(idToDelete);
 
 		return "redirect:/user/all";
 

@@ -7,25 +7,25 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import mx.ipn.cic.biblioteca.AdminControl.model.BookModel;
-import mx.ipn.cic.biblioteca.AdminControl.repositories.IBookRepository;
+import mx.ipn.cic.biblioteca.AdminControl.model.UserModel;
+import mx.ipn.cic.biblioteca.AdminControl.repositories.IUserRepository;
 
 @Service
-public class BookService {
+public class UserService {
 
 	@Autowired
-	private IBookRepository repository;
+	private IUserRepository repository;
 
-	public BookModel register(BookModel newBook) {
+	public UserModel register(UserModel newUser) {
 
-		return this.repository.save(newBook);
+		return this.repository.save(newUser);
 
 	}
 
-	public BookModel findById(Integer id) {
+	public UserModel findById(Integer id) {
 
-		Optional<BookModel> found = this.repository.findById(id);
-		
+		Optional<UserModel> found = this.repository.findById(id);
+
 		try {
 			return found.get();
 		} catch (NoSuchElementException e) {
@@ -33,25 +33,25 @@ public class BookService {
 		}
 
 		return null;
-		
+
 	}
 
-	public List<BookModel> findAll() {
+	public List<UserModel> findAll() {
 		return this.repository.findAll();
 	}
 
 	public boolean delete(Integer idToDelete) {
 
 		this.repository.deleteById(idToDelete);
-		
+
 		return true;
 
 	}
 
-	public BookModel edit(BookModel bookModel) {
+	public UserModel edit(UserModel bookModel) {
 
 		return this.repository.save(bookModel);
-		
+
 	}
 
 }

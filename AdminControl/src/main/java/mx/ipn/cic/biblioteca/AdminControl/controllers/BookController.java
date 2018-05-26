@@ -41,7 +41,10 @@ public class BookController {
 	@GetMapping(path = "/newForm")
 	public ModelAndView newBookForm() {
 
-		ModelAndView mav = new ModelAndView("books/newBookForm", "bookModel", new BookModel());
+		ModelAndView mav = new ModelAndView(
+				"books/newBookForm",
+				"bookModel",
+				new BookModel());
 
 		return mav;
 
@@ -60,10 +63,14 @@ public class BookController {
 	public String register(@ModelAttribute(name = "bookModel") 
 										BookModel bookModel) {
 
-		if (bookModel.getId() == 0) {
+		if (bookModel.getId() == null || bookModel.getId() == 0) {
+			
 			this.bookService.register(bookModel);
+			
 		} else {
+			
 			this.bookService.edit(bookModel);
+			
 		}
 
 		System.out.println(bookModel);
