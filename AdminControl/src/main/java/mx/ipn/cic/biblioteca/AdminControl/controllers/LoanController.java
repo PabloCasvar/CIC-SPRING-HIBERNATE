@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,7 +58,7 @@ public class LoanController {
 
 		List<UserModel> users = this.userService.findAll();
 
-		List<BookModel> books = this.bookService.findAll();
+		List<BookModel> books = this.bookService.findAllAvailable();
 
 		mav.addObject("usuarios", users);
 		mav.addObject("libros", books);
@@ -88,6 +89,15 @@ public class LoanController {
 		} catch (ParseException e) {
 
 		}
+
+		return "redirect:/loan/all";
+
+	}
+	
+	@GetMapping(path = "/delete/{id}")
+	public String delete(@PathVariable("id") Integer idToDelete) {
+
+		this.loanService.deleteLoan(idToDelete);
 
 		return "redirect:/loan/all";
 

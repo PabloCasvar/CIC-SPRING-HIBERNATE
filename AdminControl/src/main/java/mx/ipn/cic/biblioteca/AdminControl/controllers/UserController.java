@@ -86,4 +86,21 @@ public class UserController {
 
 	}
 
+	@GetMapping(path="/search")
+	public ModelAndView search(
+			@RequestParam(name="name", required=false) String name,
+			@RequestParam(name="lastnameP", required=false) String lastnameP,
+			@RequestParam(name="lastnameM", required=false) String lastnameM
+			) {
+				
+		List<UserModel> searchResult = 
+				this.userService.search(name, lastnameP, lastnameM);
+
+		ModelAndView mav = new ModelAndView("users/all");
+		mav.addObject("users", searchResult);
+
+		return mav;
+		
+	}
+
 }

@@ -37,7 +37,15 @@ public class BookService {
 	}
 
 	public List<BookModel> findAll() {
+		
 		return this.repository.findAll();
+		
+	}
+	
+	public List<BookModel> findAllAvailable(){
+		
+		return this.repository.findByStockGreaterThan(0);
+		
 	}
 
 	public boolean delete(Integer idToDelete) {
