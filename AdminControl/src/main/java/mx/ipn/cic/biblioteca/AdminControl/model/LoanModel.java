@@ -1,6 +1,8 @@
 package mx.ipn.cic.biblioteca.AdminControl.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "prestamo")
@@ -98,6 +102,17 @@ public class LoanModel {
 
 	public void setUser(UserModel user) {
 		this.user = user;
+	}
+
+	public String formattedStartDate() {
+		
+		Locale locale = new Locale("es","MX");
+		SimpleDateFormat sdf = 
+				new SimpleDateFormat("dd-MMMM-yyyy", 
+						locale);
+		
+		return sdf.format(startDate);
+		
 	}
 
 	// Método toString()

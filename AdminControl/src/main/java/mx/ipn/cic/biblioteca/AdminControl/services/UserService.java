@@ -37,7 +37,9 @@ public class UserService {
 	}
 
 	public List<UserModel> findAll() {
+		
 		return this.repository.findAll();
+		
 	}
 
 	public boolean delete(Integer idToDelete) {
@@ -51,6 +53,20 @@ public class UserService {
 	public UserModel edit(UserModel bookModel) {
 
 		return this.repository.save(bookModel);
+
+	}
+	
+	public List<UserModel> search(
+			String name, 
+			String lastnameP, 
+			String lastnameM){
+				
+		return this
+				.repository
+				.findByNameContainingOrLastnamePContainingOrLastnameMContaining(
+						name.length() > 0 ? name : " ", 
+						lastnameP.length() > 0 ? lastnameP : " ", 
+						lastnameM.length() > 0 ? lastnameM : " ");
 
 	}
 
